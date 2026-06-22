@@ -46,7 +46,7 @@ const ranksScale = [
 ];
 
 // Token de autenticação da API do GitHub
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = '';
 
 // Estatísticas CDF oficiais do algoritmo do github-readme-stats
 function exponential_cdf(x) { return 1 - Math.pow(2, -x); }
