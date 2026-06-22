@@ -1,0 +1,473 @@
+/*
+  ============================================================================
+  PROPRIETÁRIO: Mauricio Spark
+  MARCA:        Spark Mauricio
+  PROJETO:      Score
+  VERSÃO:       v1.0.0
+  LINHAGEM:     SPARK
+  ============================================================================
+  Documento de Planejamento de Escopo
+  COPYRIGHT: © 2026 / Mauricio Spark. Todos os direitos reservados.
+  ============================================================================
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+    min-height: 100vh;
+    color: #c9d1d9;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 40px;
+}
+
+.logo-wrapper {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(88, 166, 255, 0.3);
+    object-fit: cover;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #58a6ff 0%, #8bc9ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #8b949e;
+    font-weight: 400;
+}
+
+.input-section {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#usernameInput {
+    flex: 1;
+    max-width: 400px;
+    padding: 15px 20px;
+    border: 2px solid #30363d;
+    border-radius: 12px;
+    background: #0d1117;
+    color: #c9d1d9;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#usernameInput:focus {
+    border-color: #58a6ff;
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+#usernameInput::placeholder {
+    color: #6e7681;
+}
+
+#analyzeBtn {
+    padding: 15px 35px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(35, 134, 54, 0.3);
+}
+
+#analyzeBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(35, 134, 54, 0.4);
+}
+
+#analyzeBtn:active {
+    transform: translateY(0);
+}
+
+.results-section {
+    animation: fadeIn 0.5s ease;
+}
+
+.results-section.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stats-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #58a6ff 0%, #8bc9ff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #0d1117;
+    border: 3px solid #30363d;
+}
+
+.user-details h2 {
+    font-size: 1.5rem;
+    color: #c9d1d9;
+    margin-bottom: 5px;
+}
+
+.user-details p {
+    color: #8b949e;
+    font-size: 1rem;
+}
+
+.grade-circle {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.grade-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.grade-bg {
+    fill: none;
+    stroke: #30363d;
+    stroke-width: 8;
+}
+
+.grade-progress {
+    fill: none;
+    stroke: url(#gradeGradient);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.grade-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #58a6ff 0%, #8bc9ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.stat-item {
+    background: #0d1117;
+    border: 1px solid #21262d;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    border-color: #58a6ff;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(88, 166, 255, 0.1);
+}
+
+.stat-icon {
+    font-size: 2rem;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #c9d1d9;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #8b949e;
+    margin-top: 3px;
+}
+
+.diagnosis-section {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.diagnosis-section h3 {
+    font-size: 1.3rem;
+    color: #c9d1d9;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.diagnosis-content {
+    color: #8b949e;
+    line-height: 1.8;
+}
+
+.diagnosis-content p {
+    margin-bottom: 15px;
+}
+
+.diagnosis-content strong {
+    color: #58a6ff;
+}
+
+.diagnosis-content ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.diagnosis-content li {
+    margin-bottom: 8px;
+}
+
+.diagnosis-content li::marker {
+    color: #58a6ff;
+}
+
+/* Goals Section */
+.goals-section {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 24px;
+}
+
+.goals-section h3 {
+    color: #e6edf3;
+    margin-bottom: 16px;
+    font-size: 1.25rem;
+}
+
+.goals-container {
+    overflow-x: auto;
+}
+
+.ranks-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0d1117;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ranks-table thead {
+    background: #21262d;
+}
+
+.ranks-table th {
+    color: #e6edf3;
+    font-weight: 600;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #30363d;
+}
+
+.ranks-table td {
+    color: #c9d1d9;
+    padding: 12px 16px;
+    border-bottom: 1px solid #21262d;
+}
+
+.ranks-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.ranks-table tbody tr:hover {
+    background: #161b22;
+}
+
+.rank-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #e6edf3;
+}
+
+.rank-badge.grade-C { background: #f85149; }
+.rank-badge.grade-C-plus { background: #da3633; }
+.rank-badge.grade-B { background: #db6d28; }
+.rank-badge.grade-B-plus { background: #e3b341; }
+.rank-badge.grade-A-minus { background: #3fb950; }
+.rank-badge.grade-A { background: #2ea043; }
+.rank-badge.grade-A-plus { background: #238636; }
+.rank-badge.grade-S { background: #58a6ff; }
+.rank-badge.grade-S-plus { background: #1f6feb; }
+.rank-badge.grade-S-plus-plus { background: #8957e5; }
+
+.current-rank-row {
+    background: #1f6feb33 !important;
+    border-left: 3px solid #58a6ff;
+}
+
+.next-goal-card {
+    background: linear-gradient(135deg, #1f6feb22 0%, #8957e522 100%);
+    border: 1px solid #58a6ff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 16px;
+}
+
+.next-goal-card h4 {
+    color: #58a6ff;
+    margin: 0 0 12px 0;
+    font-size: 1.125rem;
+}
+
+.next-goal-card .goal-message {
+    color: #e6edf3;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.next-goal-card .goal-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.goal-suggestion {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #c9d1d9;
+    font-size: 0.875rem;
+}
+
+.goal-suggestion strong {
+    color: #58a6ff;
+}
+
+/* Grade colors - Sistema oficial github-readme-stats (CDF) */
+.grade-C { stroke: #f85149 !important; }
+.grade-C-plus { stroke: #da3633 !important; }
+.grade-B-minus { stroke: #d29922 !important; }
+.grade-B { stroke: #db6d28 !important; }
+.grade-B-plus { stroke: #e3b341 !important; }
+.grade-A-minus { stroke: #3fb950 !important; }
+.grade-A { stroke: #2ea043 !important; }
+.grade-A-plus { stroke: #238636 !important; }
+.grade-S { stroke: #58a6ff !important; }
+.grade-S-plus { stroke: #1f6feb !important; }
+.grade-S-plus-plus { stroke: #8957e5 !important; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .card-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .user-info {
+        flex-direction: column;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .grade-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .grade-text {
+        font-size: 2rem;
+    }
+}

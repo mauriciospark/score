@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!--
+  ============================================================================
+  PROPRIETÁRIO: Mauricio Spark
+  MARCA: SparkMauricio
+  PROJETO: Score
+  VERSÃO: v1.0.0
+  LINHAGEM: SPARK
+  ============================================================================
+  Documento de Planejamento de Escopo
+  COPYRIGHT: © 2026 / Mauricio Spark. Todos os direitos reservados.
+  ============================================================================
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCORE</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-wrapper">
+                <img src="favicon/logo.jpg" alt="Logo" class="logo">
+            </div>
+            <h1>SCORE</h1>
+            <p class="subtitle">Auditoria de Perfil GitHub</p>
+        </header>
+
+        <div class="input-section">
+            <input type="text" id="usernameInput" placeholder="Digite seu @username do GitHub" autocomplete="off">
+            <button id="analyzeBtn">Analisar</button>
+        </div>
+
+        <div class="goals-section">
+            <h3>🎯 Tabela de Ranks</h3>
+            <div id="goalsContainer" class="goals-container">
+                <table class="ranks-table" id="ranksTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Pontos Mínimos</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ranksTableBody">
+                        <!-- Preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="resultsSection" class="results-section hidden">
+            <div class="stats-card">
+                <div class="card-header">
+                    <div class="user-info">
+                        <div class="avatar" id="userAvatar"></div>
+                        <div class="user-details">
+                            <h2 id="userName"></h2>
+                            <p id="userLogin"></p>
+                        </div>
+                    </div>
+                    <div class="grade-circle">
+                        <svg viewBox="0 0 100 100" class="grade-svg">
+                            <circle cx="50" cy="50" r="45" class="grade-bg"></circle>
+                            <circle cx="50" cy="50" r="45" class="grade-progress" id="gradeProgress"></circle>
+                        </svg>
+                        <div class="grade-text">
+                            <span id="gradeLetter"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-icon">⭐</span>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalStars">-</span>
+                            <span class="stat-label">Total de estrelas:</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">📝</span>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalCommits">-</span>
+                            <span class="stat-label">Total de Commits (Ano passado):</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🔀</span>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalPRs">-</span>
+                            <span class="stat-label">Total de PRs:</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🐛</span>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalIssues">-</span>
+                            <span class="stat-label">Total de Issues:</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🤝</span>
+                        <div class="stat-info">
+                            <span class="stat-value" id="contributedTo">-</span>
+                            <span class="stat-label">Contribuiu para (ano passado):</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="diagnosis-section">
+                <h3>📋 Plano de Ação Personalizado</h3>
+                <div id="diagnosisContent" class="diagnosis-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="javascript/script.js"></script>
+</body>
+
+</html>
