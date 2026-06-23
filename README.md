@@ -34,7 +34,7 @@ O problema que o SCORE resolve é a falta de transparência e padronização na 
 - **Interface Responsiva**: Design moderno com tema dark mode
 - **Logo Profissional**: Identidade visual com marca Spark Mauricio
 
-## Como Rodar
+## Como Usar
 
 1. Clone o repositório:
 ```bash
@@ -51,21 +51,37 @@ cd score
 - Edge 90+
 ```
 
-3. Configure o Token do GitHub (opcional):
-- Edite o arquivo `javascript/script.js`
-- Substitua `GITHUB_TOKEN` pelo seu Personal Access Token do GitHub
-- Isso garante maior limite de requisições à API
+3. Gere seu Personal Access Token do GitHub:
+- Acesse: https://github.com/settings/tokens
+- Clique em "Generate new token (classic)"
+- Dê um nome descritivo ao token (ex: "SCORE Auditoria")
+- Selecione os escopos necessários: `public_repo` e `read:user`
+- Clique em "Generate token"
+- **Importante**: Copie o token imediatamente, pois ele não será exibido novamente
 
-4. Inicie a análise:
+4. Insira o token na interface:
+- Cole o token no campo "Token do GitHub (obrigatório)"
+- O token será salvo automaticamente no localStorage do navegador
+- **Nota**: O token é usado apenas localmente e nunca é enviado para servidores externos além da API do GitHub
+- **Responsabilidade**: A validade e as permissões do seu token são definidas exclusivamente pelo usuário no GitHub. A gestão de expiração e segurança é de sua total responsabilidade.
+
+5. Gerenciamento do Token:
+- Use o botão 🗑️ para apagar o token salvo do localStorage
+- Monitore a validade do seu token no GitHub Settings
+- Revogue o token quando necessário para garantir segurança
+
+6. Inicie a análise:
 - Digite o username do GitHub no campo de busca
 - Clique em "Analisar" para obter a avaliação completa
 
 ## Notas de Desenvolvimento
 
 - O sistema é 100% client-side, não requer servidor backend
-- Utiliza a API pública do GitHub com autenticação opcional
+- Utiliza a API do GitHub com autenticação obrigatória via Personal Access Token
 - Implementa algoritmos estatísticos para cálculo de percentis
 - Sistema de pesos ajustado para priorizar métricas confiáveis (estrelas e PRs)
+- Tokens são persistidos localmente via localStorage para conveniência do usuário
+- **Modelo Local-First**: A ferramenta opera exclusivamente no navegador do usuário, garantindo autonomia e privacidade dos dados
 
 ---
 

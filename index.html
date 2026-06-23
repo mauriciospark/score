@@ -49,7 +49,16 @@
 
         <div class="input-section">
             <input type="text" id="usernameInput" placeholder="Digite seu @username do GitHub" autocomplete="off">
+            <div class="token-input-wrapper">
+                <input type="password" id="tokenInput" placeholder="Token do GitHub (obrigatório)" autocomplete="off">
+                <button id="clearTokenBtn" title="Apagar Token">🗑️</button>
+            </div>
             <button id="analyzeBtn">Analisar</button>
+        </div>
+        <div class="token-info">
+            <p>⚠️ <strong>Token do GitHub é obrigatório</strong> para o funcionamento da ferramenta. Sem token, a análise não será realizada.</p>
+            <p>📝 Para criar um token: <a href="https://github.com/settings/tokens" target="_blank">GitHub Settings > Personal Access Tokens</a></p>
+            <p class="token-responsibility">🔒 <strong>Gestão de Token:</strong> A validade e a segurança deste token são de sua responsabilidade. Monitore e revogue quando necessário no GitHub.</p>
         </div>
 
         <div class="goals-section">

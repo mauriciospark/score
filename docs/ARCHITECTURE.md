@@ -74,32 +74,36 @@ O SCORE adota uma arquitetura **Client-Side First** com foco em simplicidade, pr
 
 ## Fluxo de Dados
 
-### 1. Intação do Usuário
+### 1. Interação do Usuário
 
 ```
-Usuário digita username
+Usuário digita username e token do GitHub
     ↓
 Botão "Analisar" clicado
     ↓
-JavaScript captura input
+JavaScript captura inputs
+    ↓
+Token é salvo no localStorage (persistência local)
 ```
 
 ### 2. Requisição à API do GitHub
 
 ```
-fetchGitHubData(username)
+fetchGitHubData(username, token)
     ↓
-1. Buscar perfil básico (/users/{username})
+1. Configurar headers com token de autenticação dinâmico
     ↓
-2. Buscar repositórios (paginação completa)
+2. Buscar perfil básico (/users/{username})
     ↓
-3. Buscar commits (Search API)
+3. Buscar repositórios (paginação completa)
     ↓
-4. Buscar PRs (Search API)
+4. Buscar commits (Search API)
     ↓
-5. Buscar Issues (Search API)
+5. Buscar PRs (Search API)
     ↓
-6. Buscar contribuições (user/repos com affiliation)
+6. Buscar Issues (Search API)
+    ↓
+7. Buscar contribuições (user/repos com affiliation)
 ```
 
 ### 3. Processamento de Dados
@@ -155,18 +159,23 @@ updateUI(data)
 
 ### Proteção de Dados
 - Nenhum dado é armazenado em servidor
-- Token de API é opcional (uso de rate limit público)
+- Token de API é fornecido dinamicamente pelo usuário
 - Requisições HTTPS criptografadas
 - Sem cookies ou tracking
+- Tokens são persistidos apenas no localStorage do navegador
 
-### Autenticação
-- Personal Access Token do GitHub (opcional)
-- Armazenado localmente no código (não exposto em produção)
-- Pode ser substituído por OAuth em versões futuras
+### Autenticação Dinâmica
+- Personal Access Token do GitHub (obrigatório)
+- Token inserido pelo usuário na interface
+- Armazenado no localStorage para persistência local
+- Nunca enviado para servidores externos além da API do GitHub
+- Garante segurança e privacidade dos dados
+- **Modelo Local-First**: Token é usado apenas localmente no navegador, garantindo autonomia do usuário sobre seus dados
+- **Responsabilidade**: A validade e as permissões do token são definidas exclusivamente pelo usuário no GitHub. A gestão de expiração e segurança é de sua total responsabilidade
 
 ### Rate Limiting
-- API pública: 60 requisições/hora
-- API autenticada: 5000 requisições/hora
+- API pública: 60 requisições/hora (não utilizada)
+- API autenticada: 5000 requisições/hora (padrão)
 - Sistema de paginação para maximizar uso
 - Cache inteligente para evitar requisições duplicadas
 

@@ -2,7 +2,7 @@
   ============================================================================
   PROPRIETÁRIO: Mauricio Spark
   MARCA:        Spark Mauricio
-  PROJETO:      [Insira o Nome do Projeto Aqui]
+  PROJETO:      Score
   VERSÃO:       v1.0.0
   LINHAGEM:     SPARK
   ============================================================================

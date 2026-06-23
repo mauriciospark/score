@@ -12,6 +12,8 @@
 */
 // Elementos DOM
 const usernameInput = document.getElementById('usernameInput');
+const tokenInput = document.getElementById('tokenInput');
+const clearTokenBtn = document.getElementById('clearTokenBtn');
 const analyzeBtn = document.getElementById('analyzeBtn');
 const resultsSection = document.getElementById('resultsSection');
 
@@ -44,9 +46,6 @@ const ranksScale = [
     { name: 'C+', minPercentile: 75, maxPercentile: 87.5, class: 'grade-C-plus', description: 'Em Desenvolvimento - Top 87.5%' },
     { name: 'C', minPercentile: 87.5, maxPercentile: 100, class: 'grade-C', description: 'Iniciante - Até 100%' }
 ];
-
-// Token de autenticação da API do GitHub
-const GITHUB_TOKEN = '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';
 
 // Estatísticas CDF oficiais do algoritmo do github-readme-stats
 function exponential_cdf(x) { return 1 - Math.pow(2, -x); }
@@ -173,10 +172,10 @@ function updateGoalsTable(currentPercentile, currentRank, data) {
     }
 }
 
-async function fetchGitHubData(username) {
+async function fetchGitHubData(username, token) {
     const headers = {
-        'Authorization': `token ${GITHUB_TOKEN}`,
-        'Accept': 'application/vnd.github.v3+json'
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': `token ${token}`
     };
 
     try {
@@ -289,15 +288,21 @@ function updateUI(data) {
 // Event Listeners dinâmicos para qualquer usuário
 analyzeBtn.addEventListener('click', async () => {
     const username = usernameInput.value.trim();
+    const token = tokenInput.value.trim();
+    
     if (!username) return alert('Por favor, digite um username do GitHub');
+    if (!token) return alert('A ferramenta só vai poder fazer análise se tiver um token de permissão. Por favor, insira seu GitHub Token para continuar.');
+    
+    // Salvar token no localStorage
+    localStorage.setItem('github_token', token);
     
     try {
         analyzeBtn.textContent = 'Analisando...';
         analyzeBtn.disabled = true;
-        const data = await fetchGitHubData(username);
+        const data = await fetchGitHubData(username, token);
         updateUI(data);
     } catch (error) {
-        alert('Erro ao buscar dados do usuário. Verifique o @username.');
+        alert('Erro ao buscar dados do usuário. Verifique o @username e o token e tente novamente.');
     } finally {
         analyzeBtn.textContent = 'Analisar';
         analyzeBtn.disabled = false;
@@ -305,6 +310,22 @@ analyzeBtn.addEventListener('click', async () => {
 });
 
 usernameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') analyzeBtn.click(); });
+tokenInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') analyzeBtn.click(); });
+
+// Função para apagar token
+clearTokenBtn.addEventListener('click', () => {
+    if (confirm('Tem certeza que deseja apagar o token salvo? Você precisará inseri-lo novamente para usar a ferramenta.')) {
+        localStorage.removeItem('github_token');
+        tokenInput.value = '';
+        alert('Token removido com sucesso.');
+    }
+});
+
+// Carregar token salvo do localStorage ao iniciar a página
+const savedToken = localStorage.getItem('github_token');
+if (savedToken) {
+    tokenInput.value = savedToken;
+}
 
 // Inicializa a tabela no Estado 1 (Genérica) ao carregar a página
 generateInitialRanksTable();

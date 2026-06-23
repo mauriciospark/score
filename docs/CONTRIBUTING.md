@@ -181,6 +181,20 @@ git push origin feature/sua-funcionalidade
 - Não expor informações sensíveis
 - Usar HTTPS sempre
 
+**⚠️ Nota de Segurança sobre Tokens**
+- Contribuidores devem usar seus próprios Personal Access Tokens do GitHub para testes locais
+- **NUNCA** submeter chaves de acesso (tokens) ao repositório
+- Tokens não devem ser commitados em nenhum arquivo do projeto
+- Use variáveis de ambiente ou inputs de interface para gerenciar tokens
+- Revogue tokens expostos acidentalmente imediatamente
+
+**Guia de Uso de Tokens**
+- Monitore a validade do seu token regularmente no GitHub Settings
+- Revogue tokens quando não estiverem mais em uso
+- A validade e as permissões do token são definidas exclusivamente pelo usuário no GitHub
+- A gestão de expiração e segurança é de sua total responsabilidade
+- Use a função de apagar token da interface para limpar tokens salvos no localStorage
+
 ## Comunicação
 
 ### Issues

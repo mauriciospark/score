@@ -9,6 +9,9 @@ O problema que o SCORE soluciona é a falta de uma ferramenta confiável que:
 - Considere o contexto global da comunidade GitHub
 - Ofereça recomendações práticas para melhoria
 - Seja acessível e fácil de usar para qualquer desenvolvedor
+- Utilize autenticação do usuário para contornar limitações da API pública do GitHub
+
+A auditoria de perfil depende da autenticação do usuário via Personal Access Token para garantir acesso completo à API do GitHub, contornando as limitações da API pública (60 requisições/hora) e permitindo uma análise mais precisa e abrangente do perfil.
 
 A motivação foi criar uma plataforma que democratize o acesso à análise de perfil, permitindo que desenvolvedores de todos os níveis compreendam seu impacto e recebam orientações personalizadas para crescer na comunidade.
 
@@ -21,6 +24,8 @@ A Spark Mauricio aplica seus valores fundamentais ao desenvolvimento do SCORE:
 - Todas as requisições são feitas diretamente à API do GitHub
 - Não há persistência de informações sensíveis
 - Respeito total à privacidade do desenvolvedor
+- **Modelo Local-First**: Token é usado apenas localmente no navegador e não é armazenado em servidores externos
+- **Responsabilidade do Usuário**: A validade e as permissões do token são definidas exclusivamente pelo usuário no GitHub. A gestão de expiração e segurança é de sua total responsabilidade.
 
 ### Eficiência
 - Algoritmos otimizados para cálculo rápido de ranks
