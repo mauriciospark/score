@@ -55,7 +55,8 @@ cd score
 - Acesse: https://github.com/settings/tokens
 - Clique em "Generate new token (classic)"
 - Dê um nome descritivo ao token (ex: "SCORE Auditoria")
-- Selecione os escopos necessários: `public_repo` e `read:user`
+- Selecione os escopos necessários: `repo` (acesso a repositórios) e `user` (especificamente `read:user` para dados do perfil)
+- **Importante**: Não selecione outras opções adicionais além dessas duas permissões
 - Clique em "Generate token"
 - **Importante**: Copie o token imediatamente, pois ele não será exibido novamente
 
