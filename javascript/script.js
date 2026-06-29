@@ -48,6 +48,8 @@ const ranksScale = [
     { name: 'C', minPercentile: 87.5, maxPercentile: 100, class: 'grade-C', description: 'Iniciante - Até 100%' }
 ];
 
+// Token de autenticação da API do GitHub
+const GITHUB_TOKEN = '';
 // Estatísticas CDF oficiais do algoritmo do github-readme-stats
 function exponential_cdf(x) { return 1 - Math.pow(2, -x); }
 function log_normal_cdf(x) { return x / (1 + x); }
