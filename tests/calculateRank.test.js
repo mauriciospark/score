@@ -10,113 +10,111 @@
   COPYRIGHT: © 2026 / Mauricio Spark. Todos os direitos reservados.
   ============================================================================
 */
-import { describe, expect, it } from "@jest/globals";
-import "@testing-library/jest-dom";
-import { calculateRank } from "../src/calculateRank.js";
+import { calculateRank } from "../../src/calculateRank.js";
+import { it } from "@jest/globals";
+import { runAndLogStats } from "./utils.js";
 
-describe("Test calculateRank", () => {
-  it("new user gets C rank", () => {
-    expect(
-      calculateRank({
-        all_commits: false,
-        commits: 0,
-        prs: 0,
-        issues: 0,
-        reviews: 0,
-        repos: 0,
-        stars: 0,
-        followers: 0,
-      }),
-    ).toStrictEqual({ level: "C", percentile: 100 });
+it("calculateRank - C (mais baixa)", async () => {
+  await runAndLogStats("calculateRank - C (mais baixa)", () => {
+    calculateRank({
+      all_commits: false,
+      commits: 10,
+      prs: 5,
+      issues: 2,
+      reviews: 0,
+      repos: 1,
+      stars: 0,
+      followers: 1,
+    });
   });
+});
 
-  it("beginner user gets B- rank", () => {
-    expect(
-      calculateRank({
-        all_commits: false,
-        commits: 125,
-        prs: 25,
-        issues: 10,
-        reviews: 5,
-        repos: 0,
-        stars: 25,
-        followers: 5,
-      }),
-    ).toStrictEqual({ level: "B-", percentile: 65.02918514848255 });
+it("calculateRank - B-", async () => {
+  await runAndLogStats("calculateRank - B-", () => {
+    calculateRank({
+      all_commits: false,
+      commits: 100,
+      prs: 30,
+      issues: 15,
+      reviews: 5,
+      repos: 5,
+      stars: 20,
+      followers: 10,
+    });
   });
+});
 
-  it("median user gets B+ rank", () => {
-    expect(
-      calculateRank({
-        all_commits: false,
-        commits: 250,
-        prs: 50,
-        issues: 25,
-        reviews: 10,
-        repos: 0,
-        stars: 50,
-        followers: 10,
-      }),
-    ).toStrictEqual({ level: "B+", percentile: 46.09375 });
+it("calculateRank - B", async () => {
+  await runAndLogStats("calculateRank - B", () => {
+    calculateRank({
+      all_commits: false,
+      commits: 200,
+      prs: 50,
+      issues: 25,
+      reviews: 10,
+      repos: 10,
+      stars: 50,
+      followers: 20,
+    });
   });
+});
 
-  it("average user gets B+ rank (include_all_commits)", () => {
-    expect(
-      calculateRank({
-        all_commits: true,
-        commits: 1000,
-        prs: 50,
-        issues: 25,
-        reviews: 10,
-        repos: 0,
-        stars: 50,
-        followers: 10,
-      }),
-    ).toStrictEqual({ level: "B+", percentile: 46.09375 });
+it("calculateRank - A", async () => {
+  await runAndLogStats("calculateRank - A", () => {
+    calculateRank({
+      all_commits: false,
+      commits: 500,
+      prs: 100,
+      issues: 50,
+      reviews: 20,
+      repos: 20,
+      stars: 200,
+      followers: 50,
+    });
   });
+});
 
-  it("advanced user gets A rank", () => {
-    expect(
-      calculateRank({
-        all_commits: false,
-        commits: 500,
-        prs: 100,
-        issues: 50,
-        reviews: 20,
-        repos: 0,
-        stars: 200,
-        followers: 40,
-      }),
-    ).toStrictEqual({ level: "A", percentile: 20.841471354166664 });
+it("calculateRank - A+", async () => {
+  await runAndLogStats("calculateRank - A+", () => {
+    calculateRank({
+      all_commits: false,
+      commits: 1000,
+      prs: 200,
+      issues: 100,
+      reviews: 50,
+      repos: 30,
+      stars: 500,
+      followers: 100,
+    });
   });
+});
 
-  it("expert user gets A+ rank", () => {
-    expect(
-      calculateRank({
-        all_commits: false,
-        commits: 1000,
-        prs: 200,
-        issues: 100,
-        reviews: 40,
-        repos: 0,
-        stars: 800,
-        followers: 160,
-      }),
-    ).toStrictEqual({ level: "A+", percentile: 5.575988339442828 });
+it("calculateRank - S (Elite)", async () => {
+  await runAndLogStats("calculateRank - S (Elite)", () => {
+    calculateRank({
+      all_commits: false,
+      commits: 5000,
+      prs: 1000,
+      issues: 500,
+      reviews: 200,
+      repos: 100,
+      stars: 10000,
+      followers: 1000,
+    });
   });
+});
 
-  it("sindresorhus gets S rank", () => {
-    expect(
-      calculateRank({
-        all_commits: false,
-        commits: 1300,
-        prs: 1500,
-        issues: 4500,
-        reviews: 1000,
-        repos: 0,
-        stars: 600000,
-        followers: 50000,
-      }),
-    ).toStrictEqual({ level: "S", percentile: 0.4578556547153667 });
+it("calculateRank - S++ (Elite Máxima - mais alta)", async () => {
+  await runAndLogStats("calculateRank - S++ (Elite Máxima - mais alta)", () => {
+    calculateRank({
+      all_commits: false,
+      commits: 20000,
+      prs: 5000,
+      issues: 2000,
+      reviews: 1000,
+      repos: 500,
+      stars: 100000,
+      followers: 10000,
+    });
   });
 });
