@@ -12,6 +12,8 @@
 */
 // Elementos DOM
 const usernameInput = document.getElementById('usernameInput');
+const tokenInput = document.getElementById('tokenInput');
+const clearTokenBtn = document.getElementById('clearTokenBtn');
 const analyzeBtn = document.getElementById('analyzeBtn');
 const resultsSection = document.getElementById('resultsSection');
 
@@ -34,20 +36,20 @@ const goalsContainer = document.getElementById('goalsContainer');
 
 // Escala oficial de Ranks baseada nos Percentis do GitHub Mundial
 const ranksScale = [
-    { name: 'S', minPercentile: 0, maxPercentile: 1, class: 'grade-S', description: 'Excepcional - Top 1%' },
-    { name: 'A+', minPercentile: 1, maxPercentile: 12.5, class: 'grade-A-plus', description: 'Excelente - Top 12.5%' },
-    { name: 'A', minPercentile: 12.5, maxPercentile: 25, class: 'grade-A', description: 'Muito Bom - Top 25%' },
-    { name: 'A-', minPercentile: 25, maxPercentile: 37.5, class: 'grade-A-minus', description: 'Bom - Top 37.5%' },
-    { name: 'B+', minPercentile: 37.5, maxPercentile: 50, class: 'grade-B-plus', description: 'Satisfatório Alto - Top 50%' },
-    { name: 'B', minPercentile: 50, maxPercentile: 62.5, class: 'grade-B', description: 'Satisfatório - Top 62.5%' },
-    { name: 'B-', minPercentile: 62.5, maxPercentile: 75, class: 'grade-B-minus', description: 'Regular - Top 75%' },
-    { name: 'C+', minPercentile: 75, maxPercentile: 87.5, class: 'grade-C-plus', description: 'Em Desenvolvimento - Top 87.5%' },
+    { name: 'S++', minPercentile: 0, maxPercentile: 0.5, class: 'grade-S-plus-plus', description: 'Elite Máxima - Top 0.5%' },
+    { name: 'S', minPercentile: 0.5, maxPercentile: 5, class: 'grade-S', description: 'Elite - Top 5%' },
+    { name: 'A+', minPercentile: 5, maxPercentile: 12.5, class: 'grade-A-plus', description: 'Avançado - Top 12.5%' },
+    { name: 'A', minPercentile: 12.5, maxPercentile: 25, class: 'grade-A', description: 'Avançado - Top 25%' },
+    { name: 'A-', minPercentile: 25, maxPercentile: 37.5, class: 'grade-A-minus', description: 'Avançado - Top 37.5%' },
+    { name: 'B+', minPercentile: 37.5, maxPercentile: 50, class: 'grade-B-plus', description: 'Intermediário - Top 50%' },
+    { name: 'B', minPercentile: 50, maxPercentile: 62.5, class: 'grade-B', description: 'Intermediário - Top 62.5%' },
+    { name: 'B-', minPercentile: 62.5, maxPercentile: 75, class: 'grade-B-minus', description: 'Intermediário - Top 75%' },
+    { name: 'C+', minPercentile: 75, maxPercentile: 87.5, class: 'grade-C-plus', description: 'Iniciante - Top 87.5%' },
     { name: 'C', minPercentile: 87.5, maxPercentile: 100, class: 'grade-C', description: 'Iniciante - Até 100%' }
 ];
 
 // Token de autenticação da API do GitHub
 const GITHUB_TOKEN = '';
-
 // Estatísticas CDF oficiais do algoritmo do github-readme-stats
 function exponential_cdf(x) { return 1 - Math.pow(2, -x); }
 function log_normal_cdf(x) { return x / (1 + x); }
@@ -65,7 +67,7 @@ function calculateOfficialRank(commits, prs, issues, reviews, stars, followers) 
     const TOTAL_WEIGHT = COMMITS_WEIGHT + PRS_WEIGHT + ISSUES_WEIGHT + REVIEWS_WEIGHT + STARS_WEIGHT + FOLLOWERS_WEIGHT;
 
     // Margem de segurança para compensar falhas da API (amortecimento de 15%)
-    const SAFETY_MARGIN = 0.15;
+    const SAFETY_MARGIN = 0;
     const adjustedCommits = commits * (1 + SAFETY_MARGIN);
     const adjustedPRs = prs * (1 + SAFETY_MARGIN);
 
@@ -81,14 +83,14 @@ function calculateOfficialRank(commits, prs, issues, reviews, stars, followers) 
     const percentile = rankValue * 100;
 
     // Determinar o nível com base nos limites oficiais
-    const THRESHOLDS = [1, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100];
-    const LEVELS = ["S", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"];
+    const THRESHOLDS = [0.5, 5, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100];
+    const LEVELS = ["S++", "S", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"];
     
     let index = THRESHOLDS.findIndex((t) => percentile <= t);
     if (index === -1) index = LEVELS.length - 1;
 
-    // Estabilidade da nota: aplicar buffer de 5% para evitar variações pequenas
-    const STABILITY_BUFFER = 5;
+    // Estabilidade da nota: aplicar buffer de 0% para evitar variações pequenas
+    const STABILITY_BUFFER = 0;
     const stablePercentile = Math.max(percentile - STABILITY_BUFFER, 0);
     
     // Recalcular nível com percentil estabilizado
@@ -173,10 +175,10 @@ function updateGoalsTable(currentPercentile, currentRank, data) {
     }
 }
 
-async function fetchGitHubData(username) {
+async function fetchGitHubData(username, token) {
     const headers = {
-        'Authorization': `token ${GITHUB_TOKEN}`,
-        'Accept': 'application/vnd.github.v3+json'
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': `token ${token}`
     };
 
     try {
@@ -289,15 +291,21 @@ function updateUI(data) {
 // Event Listeners dinâmicos para qualquer usuário
 analyzeBtn.addEventListener('click', async () => {
     const username = usernameInput.value.trim();
+    const token = tokenInput.value.trim();
+    
     if (!username) return alert('Por favor, digite um username do GitHub');
+    if (!token) return alert('A ferramenta só vai poder fazer análise se tiver um token de permissão. Por favor, insira seu GitHub Token para continuar.');
+    
+    // Salvar token no localStorage
+    localStorage.setItem('github_token', token);
     
     try {
         analyzeBtn.textContent = 'Analisando...';
         analyzeBtn.disabled = true;
-        const data = await fetchGitHubData(username);
+        const data = await fetchGitHubData(username, token);
         updateUI(data);
     } catch (error) {
-        alert('Erro ao buscar dados do usuário. Verifique o @username.');
+        alert('Erro ao buscar dados do usuário. Verifique o @username e o token e tente novamente.');
     } finally {
         analyzeBtn.textContent = 'Analisar';
         analyzeBtn.disabled = false;
@@ -305,6 +313,22 @@ analyzeBtn.addEventListener('click', async () => {
 });
 
 usernameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') analyzeBtn.click(); });
+tokenInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') analyzeBtn.click(); });
+
+// Função para apagar token
+clearTokenBtn.addEventListener('click', () => {
+    if (confirm('Tem certeza que deseja apagar o token salvo? Você precisará inseri-lo novamente para usar a ferramenta.')) {
+        localStorage.removeItem('github_token');
+        tokenInput.value = '';
+        alert('Token removido com sucesso.');
+    }
+});
+
+// Carregar token salvo do localStorage ao iniciar a página
+const savedToken = localStorage.getItem('github_token');
+if (savedToken) {
+    tokenInput.value = savedToken;
+}
 
 // Inicializa a tabela no Estado 1 (Genérica) ao carregar a página
 generateInitialRanksTable();
