@@ -64,7 +64,7 @@ function calculateOfficialRank(commits, prs, issues, reviews, stars, followers) 
     const TOTAL_WEIGHT = COMMITS_WEIGHT + PRS_WEIGHT + ISSUES_WEIGHT + REVIEWS_WEIGHT + STARS_WEIGHT + FOLLOWERS_WEIGHT;
 
     // Margem de segurança para compensar falhas da API (amortecimento de 15%)
-    const SAFETY_MARGIN = 0.15;
+    const SAFETY_MARGIN = 0;
     const adjustedCommits = commits * (1 + SAFETY_MARGIN);
     const adjustedPRs = prs * (1 + SAFETY_MARGIN);
 
@@ -86,8 +86,8 @@ function calculateOfficialRank(commits, prs, issues, reviews, stars, followers) 
     let index = THRESHOLDS.findIndex((t) => percentile <= t);
     if (index === -1) index = LEVELS.length - 1;
 
-    // Estabilidade da nota: aplicar buffer de 5% para evitar variações pequenas
-    const STABILITY_BUFFER = 5;
+    // Estabilidade da nota: aplicar buffer de 0% para evitar variações pequenas
+    const STABILITY_BUFFER = 0;
     const stablePercentile = Math.max(percentile - STABILITY_BUFFER, 0);
     
     // Recalcular nível com percentil estabilizado
