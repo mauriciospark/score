@@ -72,6 +72,18 @@ O SCORE adota uma arquitetura **Client-Side First** com foco em simplicidade, pr
 - Estrelas: Peso máximo (métrica mais estável)
 - Issues, Reviews, Followers: Peso moderado
 
+**Hierarquia de Ranks**
+- S++: Elite Máxima (0.0% - 0.5%) - Performance Excepcional
+- S: Elite (0.5% - 5.0%) - Performance de Alta Escala
+- A+: Avançado (5.0% - 12.5%) - Alta Performance
+- A: Avançado (12.5% - 25.0%) - Performance Consistente
+- A-: Avançado (25.0% - 37.5%) - Performance Sólida
+- B+: Intermediário (37.5% - 50.0%) - Acima da Média
+- B: Intermediário (50.0% - 62.5%) - Média do Desenvolvedor
+- B-: Intermediário (62.5% - 75.0%) - Abaixo da Média
+- C+: Iniciante (75.0% - 87.5%) - Fase de Aprendizado
+- C: Iniciante (87.5% - 100%) - Nível de Entrada
+
 ## Fluxo de Dados
 
 ### 1. Interação do Usuário

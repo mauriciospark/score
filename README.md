@@ -25,7 +25,7 @@ O problema que o SCORE resolve é a falta de transparência e padronização na 
 ## Funcionalidades
 
 - **Análise de Perfil**: Busca automática de dados do usuário via API do GitHub
-- **Cálculo de Rank**: Algoritmo oficial baseado em percentis globais (S, A+, A, A-, B+, B, B-, C+, C)
+- **Cálculo de Rank**: Algoritmo oficial baseado em percentis globais (S++, S, A+, A, A-, B+, B, B-, C+, C)
 - **Tabela Dinâmica de Metas**: 
   - Estado 1: Tabela informativa com todos os ranks e faixas de percentil
   - Estado 2: Tabela personalizada mostrando o rank atual e próximos objetivos

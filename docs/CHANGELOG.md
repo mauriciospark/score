@@ -7,8 +7,8 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 ### [Added]
 - **Sistema de Auditoria de Perfil GitHub**: Lançamento inicial da plataforma
 - **Cálculo de Rank por Percentil**: Implementação do algoritmo oficial de CDF (Cumulative Distribution Function) do GitHub
-- **Tabela Dinâmica de Metas**: 
-  - Estado 1: Tabela informativa com todos os ranks (S, A+, A, A-, B+, B, B-, C+, C)
+- **Tabela Dinâmica de Metas**:
+  - Estado 1: Tabela informativa com todos os ranks (S++, S, A+, A, A-, B+, B, B-, C+, C)
   - Estado 2: Tabela personalizada com dados do usuário e próximos objetivos
 - **Integração com API do GitHub**: 
   - Busca de perfil básico

@@ -36,14 +36,15 @@ const goalsContainer = document.getElementById('goalsContainer');
 
 // Escala oficial de Ranks baseada nos Percentis do GitHub Mundial
 const ranksScale = [
-    { name: 'S', minPercentile: 0, maxPercentile: 1, class: 'grade-S', description: 'Excepcional - Top 1%' },
-    { name: 'A+', minPercentile: 1, maxPercentile: 12.5, class: 'grade-A-plus', description: 'Excelente - Top 12.5%' },
-    { name: 'A', minPercentile: 12.5, maxPercentile: 25, class: 'grade-A', description: 'Muito Bom - Top 25%' },
-    { name: 'A-', minPercentile: 25, maxPercentile: 37.5, class: 'grade-A-minus', description: 'Bom - Top 37.5%' },
-    { name: 'B+', minPercentile: 37.5, maxPercentile: 50, class: 'grade-B-plus', description: 'Satisfatório Alto - Top 50%' },
-    { name: 'B', minPercentile: 50, maxPercentile: 62.5, class: 'grade-B', description: 'Satisfatório - Top 62.5%' },
-    { name: 'B-', minPercentile: 62.5, maxPercentile: 75, class: 'grade-B-minus', description: 'Regular - Top 75%' },
-    { name: 'C+', minPercentile: 75, maxPercentile: 87.5, class: 'grade-C-plus', description: 'Em Desenvolvimento - Top 87.5%' },
+    { name: 'S++', minPercentile: 0, maxPercentile: 0.5, class: 'grade-S-plus-plus', description: 'Elite Máxima - Top 0.5%' },
+    { name: 'S', minPercentile: 0.5, maxPercentile: 5, class: 'grade-S', description: 'Elite - Top 5%' },
+    { name: 'A+', minPercentile: 5, maxPercentile: 12.5, class: 'grade-A-plus', description: 'Avançado - Top 12.5%' },
+    { name: 'A', minPercentile: 12.5, maxPercentile: 25, class: 'grade-A', description: 'Avançado - Top 25%' },
+    { name: 'A-', minPercentile: 25, maxPercentile: 37.5, class: 'grade-A-minus', description: 'Avançado - Top 37.5%' },
+    { name: 'B+', minPercentile: 37.5, maxPercentile: 50, class: 'grade-B-plus', description: 'Intermediário - Top 50%' },
+    { name: 'B', minPercentile: 50, maxPercentile: 62.5, class: 'grade-B', description: 'Intermediário - Top 62.5%' },
+    { name: 'B-', minPercentile: 62.5, maxPercentile: 75, class: 'grade-B-minus', description: 'Intermediário - Top 75%' },
+    { name: 'C+', minPercentile: 75, maxPercentile: 87.5, class: 'grade-C-plus', description: 'Iniciante - Top 87.5%' },
     { name: 'C', minPercentile: 87.5, maxPercentile: 100, class: 'grade-C', description: 'Iniciante - Até 100%' }
 ];
 
@@ -64,7 +65,7 @@ function calculateOfficialRank(commits, prs, issues, reviews, stars, followers) 
     const TOTAL_WEIGHT = COMMITS_WEIGHT + PRS_WEIGHT + ISSUES_WEIGHT + REVIEWS_WEIGHT + STARS_WEIGHT + FOLLOWERS_WEIGHT;
 
     // Margem de segurança para compensar falhas da API (amortecimento de 15%)
-    const SAFETY_MARGIN = 0.15;
+    const SAFETY_MARGIN = 0;
     const adjustedCommits = commits * (1 + SAFETY_MARGIN);
     const adjustedPRs = prs * (1 + SAFETY_MARGIN);
 
@@ -80,14 +81,14 @@ function calculateOfficialRank(commits, prs, issues, reviews, stars, followers) 
     const percentile = rankValue * 100;
 
     // Determinar o nível com base nos limites oficiais
-    const THRESHOLDS = [1, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100];
-    const LEVELS = ["S", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"];
+    const THRESHOLDS = [0.5, 5, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100];
+    const LEVELS = ["S++", "S", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"];
     
     let index = THRESHOLDS.findIndex((t) => percentile <= t);
     if (index === -1) index = LEVELS.length - 1;
 
-    // Estabilidade da nota: aplicar buffer de 5% para evitar variações pequenas
-    const STABILITY_BUFFER = 5;
+    // Estabilidade da nota: aplicar buffer de 0% para evitar variações pequenas
+    const STABILITY_BUFFER = 0;
     const stablePercentile = Math.max(percentile - STABILITY_BUFFER, 0);
     
     // Recalcular nível com percentil estabilizado
