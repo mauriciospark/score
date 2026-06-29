@@ -18,13 +18,13 @@ it("calculateRank", async () => {
   await runAndLogStats("calculateRank", () => {
     calculateRank({
       all_commits: false,
-      commits: 1300,
-      prs: 1500,
-      issues: 4500,
-      reviews: 1000,
+      commits: 00,
+      prs: 00,
+      issues: 00,
+      reviews: 000,
       repos: 0,
-      stars: 600000,
-      followers: 50000,
+      stars: 00000,
+      followers: 0000,
     });
   });
 });
