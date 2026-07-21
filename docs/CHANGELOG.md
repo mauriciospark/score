@@ -2,6 +2,22 @@
 
 Este documento mantém um registro cronológico e organizado de todas as evoluções e atualizações do sistema SCORE.
 
+## [1.0.1] - 2026-07-21
+
+### [Added]
+- **Botão de Estrelas GitHub**: Exibe em tempo real o número de estrelas do repositório
+- **Link Direto para Repositório**: Botão abre o projeto no GitHub em nova aba
+- **Indicador de Carregamento**: Exibe "..." durante a busca de estrelas
+- **Estilos Modernos**: Design com gradientes, sombras e efeitos hover aprimorados
+- **Glow Effect**: Efeito de brilho no ícone de estrela
+- **Layout Inline**: Integração do botão no layout principal da interface
+
+### [Changed]
+- **Ajuste de CSS**: Remoção de header fixo para melhor integração visual
+- **Melhoria de UX**: Transições mais suaves e feedback visual melhorado
+
+---
+
 ## [1.0.0] - 2026-06-22
 
 ### [Added]
@@ -87,6 +103,6 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 
 **PROPRIETÁRIO**: Mauricio Spark  
 **MARCA**: Spark Mauricio  
-**VERSÃO**: v1.0.0  
+**VERSÃO**: v1.0.1  
 **LINHAGEM**: SPARK  
 **COPYRIGHT**: © 2026 / Mauricio Spark. Todos os direitos reservados.

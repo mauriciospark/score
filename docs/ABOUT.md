@@ -44,6 +44,7 @@ A Spark Mauricio aplica seus valores fundamentais ao desenvolvimento do SCORE:
 - Experiência de usuário intuitiva e fluida
 - Identidade visual profissional com logo Spark Mauricio
 - Layout responsivo para todos os dispositivos
+- Botão de estrelas GitHub com visual moderno e funcionalidade em tempo real
 
 ## Público-Alvo
 
@@ -108,6 +109,6 @@ O SCORE está em constante evolução, sempre buscando oferecer a melhor experi�
 
 **PROPRIETÁRIO**: Mauricio Spark  
 **MARCA**: Spark Mauricio  
-**VERSÃO**: v1.0.0  
+**VERSÃO**: v1.0.1  
 **LINHAGEM**: SPARK  
 **COPYRIGHT**: © 2026 / Mauricio Spark. Todos os direitos reservados.

@@ -16,6 +16,8 @@ const tokenInput = document.getElementById('tokenInput');
 const clearTokenBtn = document.getElementById('clearTokenBtn');
 const analyzeBtn = document.getElementById('analyzeBtn');
 const resultsSection = document.getElementById('resultsSection');
+const githubStarsBtn = document.getElementById('github-stars-btn');
+const githubStarsCount = document.getElementById('github-stars-count');
 
 // Elementos do card
 const userAvatar = document.getElementById('userAvatar');
@@ -83,14 +85,14 @@ function calculateOfficialRank(commits, prs, issues, reviews, stars, followers) 
     // Determinar o nível com base nos limites oficiais
     const THRESHOLDS = [0.5, 5, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100];
     const LEVELS = ["S++", "S", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"];
-    
+
     let index = THRESHOLDS.findIndex((t) => percentile <= t);
     if (index === -1) index = LEVELS.length - 1;
 
     // Estabilidade da nota: aplicar buffer de 0% para evitar variações pequenas
     const STABILITY_BUFFER = 0;
     const stablePercentile = Math.max(percentile - STABILITY_BUFFER, 0);
-    
+
     // Recalcular nível com percentil estabilizado
     let stableIndex = THRESHOLDS.findIndex((t) => stablePercentile <= t);
     if (stableIndex === -1) stableIndex = LEVELS.length - 1;
@@ -118,22 +120,22 @@ function generateInitialRanksTable() {
 // ESTADO 2: Atualizar tabela dinamicamente pós-busca
 function updateGoalsTable(currentPercentile, currentRank, data) {
     goalsContainer.innerHTML = '';
-    
+
     const table = document.createElement('table');
     table.className = 'ranks-table';
-    
+
     const thead = document.createElement('thead');
     thead.innerHTML = `<tr><th>Rank</th><th>Percentil Alvo</th><th>Status</th></tr>`;
     table.appendChild(thead);
-    
+
     const tbody = document.createElement('tbody');
-    
+
     ranksScale.forEach(rank => {
         const row = document.createElement('tr');
         const isCurrentRank = rank.name === currentRank;
-        
+
         if (isCurrentRank) row.className = 'current-rank-row';
-        
+
         let status = '';
         if (isCurrentRank) {
             status = '<span style="color: #58a6ff; font-weight: 600;">🎯 Seu Rank Atual</span>';
@@ -142,7 +144,7 @@ function updateGoalsTable(currentPercentile, currentRank, data) {
         } else {
             status = '<span style="color: #8b949e;">⏳ Pendente</span>';
         }
-        
+
         row.innerHTML = `
             <td><span class="rank-badge ${rank.class}">${rank.name}</span></td>
             <td>Top ${rank.maxPercentile}%</td>
@@ -150,7 +152,7 @@ function updateGoalsTable(currentPercentile, currentRank, data) {
         `;
         tbody.appendChild(row);
     });
-    
+
     table.appendChild(tbody);
     goalsContainer.appendChild(table);
 
@@ -189,7 +191,7 @@ async function fetchGitHubData(username, token) {
         let totalStars = 0;
         let page = 1;
         let hasMoreRepos = true;
-        
+
         while (hasMoreRepos) {
             const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&page=${page}`, { headers });
             const reposData = await reposResponse.json();
@@ -202,12 +204,12 @@ async function fetchGitHubData(username, token) {
         }
 
         // 3. Commits Totais Reais (Buscando pelo autor global na API de Search sem travas de paginação de visualização)
-        const commitsResponse = await fetch(`https://api.github.com/search/commits?q=author:${username}&per_page=1`, { 
+        const commitsResponse = await fetch(`https://api.github.com/search/commits?q=author:${username}&per_page=1`, {
             headers: { ...headers, 'Accept': 'application/vnd.github.cloak-preview+json' }
         });
         const commitsData = await commitsResponse.json();
         // Se a API de busca falhar ou omitir por privacidade, usamos uma estimativa real baseada nos repositórios públicos
-        const totalCommits = commitsData.total_count || (userData.public_repos * 12); 
+        const totalCommits = commitsData.total_count || (userData.public_repos * 12);
 
         // 4. Pull Requests Reais (Contagem global exata)
         const prsResponse = await fetch(`https://api.github.com/search/issues?q=author:${username}+type:pr`, { headers });
@@ -262,27 +264,27 @@ function updateUI(data) {
     userAvatar.textContent = data.name.charAt(0).toUpperCase();
     userName.textContent = data.name;
     userLogin.textContent = '@' + data.login;
-    
+
     totalStars.textContent = data.stars;
     totalCommits.textContent = data.commits;
     totalPRs.textContent = data.prs;
     totalIssues.textContent = data.issues;
     contributedTo.textContent = data.contributedTo;
-    
+
     // Calcula com a fórmula de estatística real do GitHub
     const rankInfo = calculateOfficialRank(data.commits, data.prs, data.issues, 0, data.stars, data.followers);
-    
+
     gradeLetter.textContent = rankInfo.level;
-    
+
     // Atualiza o círculo gráfico (quanto menor o percentil, melhor o ranking)
     const circumference = 2 * Math.PI * 45;
     const progressOffset = circumference * (rankInfo.percentile / 100);
     gradeProgress.style.strokeDashoffset = progressOffset;
-    
+
     // Renderiza o diagnóstico e reconstrói a tabela para o Estado 2
     diagnosisContent.innerHTML = generateDiagnosis(data, rankInfo);
     updateGoalsTable(rankInfo.percentile, rankInfo.level, data);
-    
+
     resultsSection.classList.remove('hidden');
 }
 
@@ -290,13 +292,13 @@ function updateUI(data) {
 analyzeBtn.addEventListener('click', async () => {
     const username = usernameInput.value.trim();
     const token = tokenInput.value.trim();
-    
+
     if (!username) return alert('Por favor, digite um username do GitHub');
     if (!token) return alert('A ferramenta só vai poder fazer análise se tiver um token de permissão. Por favor, insira seu GitHub Token para continuar.');
-    
+
     // Salvar token no localStorage
     localStorage.setItem('github_token', token);
-    
+
     try {
         analyzeBtn.textContent = 'Analisando...';
         analyzeBtn.disabled = true;
@@ -327,6 +329,35 @@ const savedToken = localStorage.getItem('github_token');
 if (savedToken) {
     tokenInput.value = savedToken;
 }
+
+// Função para buscar estrelas do repositório do projeto
+async function fetchRepoStars() {
+    const repoOwner = 'mauriciospark';
+    const repoName = 'score';
+
+    try {
+        githubStarsCount.textContent = '...';
+        const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}`);
+        if (!response.ok) throw new Error('Erro ao buscar repositório');
+
+        const data = await response.json();
+        const stars = data.stargazers_count;
+
+        githubStarsCount.textContent = stars;
+        githubStarsBtn.title = `Ver repositório no GitHub (${stars} estrelas)`;
+    } catch (error) {
+        console.error('Erro ao buscar estrelas:', error);
+        githubStarsCount.textContent = 'Erro';
+    }
+}
+
+// Event listener para o botão de estrelas do GitHub
+githubStarsBtn.addEventListener('click', () => {
+    window.open('https://github.com/mauriciospark/score', '_blank');
+});
+
+// Carregar estrelas ao iniciar a página
+fetchRepoStars();
 
 // Inicializa a tabela no Estado 1 (Genérica) ao carregar a página
 generateInitialRanksTable();

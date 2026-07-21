@@ -154,7 +154,23 @@ updateUI(data)
 7. Mostrar seção de resultados
 ```
 
-### 5. Sistema de Estados da Tabela de Metas
+### 5. Sistema de Botão de Estrelas GitHub
+
+```
+fetchRepoStars()
+    ↓
+1. Buscar dados do repositório via API pública
+    ↓
+2. Extrair contagem de estrelas (stargazers_count)
+    ↓
+3. Atualizar texto do botão com número de estrelas
+    ↓
+4. Configurar link para abrir repositório em nova aba
+    ↓
+5. Aplicar estilos visuais com hover effects
+```
+
+### 6. Sistema de Estados da Tabela de Metas
 
 **Estado 1 (Inicial)**
 - Tabela informativa com todos os ranks
@@ -250,6 +266,6 @@ score/
 
 **PROPRIETÁRIO**: Mauricio Spark  
 **MARCA**: Spark Mauricio  
-**VERSÃO**: v1.0.0  
+**VERSÃO**: v1.0.1  
 **LINHAGEM**: SPARK  
 **COPYRIGHT**: © 2026 / Mauricio Spark. Todos os direitos reservados.

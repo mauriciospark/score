@@ -65,6 +65,81 @@ header h1 {
     font-weight: 400;
 }
 
+.header-inner {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.header-glow {
+    position: absolute;
+    top: 50%;
+    right: 180px;
+    transform: translateY(-50%);
+    width: 200px;
+    height: 40px;
+    background: radial-gradient(ellipse, rgba(88, 166, 255, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.github-stars-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    color: #c9d1d9;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.github-stars-btn:hover {
+    background: linear-gradient(135deg, #21262d 0%, #161b22 100%);
+    border-color: #58a6ff;
+    color: #58a6ff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(88, 166, 255, 0.25);
+}
+
+.github-stars-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(88, 166, 255, 0.15);
+}
+
+.github-icon {
+    color: #c9d1d9;
+    transition: color 0.3s ease;
+}
+
+.github-stars-btn:hover .github-icon {
+    color: #58a6ff;
+}
+
+.star-icon {
+    color: #e3b341;
+    filter: drop-shadow(0 0 2px rgba(227, 179, 65, 0.3));
+}
+
+#github-stars-count {
+    font-weight: 700;
+    color: #c9d1d9;
+    transition: color 0.3s ease;
+    min-width: 20px;
+    text-align: center;
+}
+
+.github-stars-btn:hover #github-stars-count {
+    color: #58a6ff;
+}
+
 .input-section {
     display: flex;
     gap: 15px;
@@ -215,6 +290,7 @@ header h1 {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -460,16 +536,45 @@ header h1 {
     color: #e6edf3;
 }
 
-.rank-badge.grade-C { background: #f85149; }
-.rank-badge.grade-C-plus { background: #da3633; }
-.rank-badge.grade-B { background: #da3649; }
-.rank-badge.grade-B-plus { background: #e3b341; }
-.rank-badge.grade-A-minus { background: #3fb950; }
-.rank-badge.grade-A { background: #2ea043; }
-.rank-badge.grade-A-plus { background: #238636; }
-.rank-badge.grade-S { background: #58a6ff; }
-.rank-badge.grade-S-plus { background: #1f6feb; }
-.rank-badge.grade-S-plus-plus { background: #8957e5; }
+.rank-badge.grade-C {
+    background: #f85149;
+}
+
+.rank-badge.grade-C-plus {
+    background: #da3633;
+}
+
+.rank-badge.grade-B {
+    background: #da3649;
+}
+
+.rank-badge.grade-B-plus {
+    background: #e3b341;
+}
+
+.rank-badge.grade-A-minus {
+    background: #3fb950;
+}
+
+.rank-badge.grade-A {
+    background: #2ea043;
+}
+
+.rank-badge.grade-A-plus {
+    background: #238636;
+}
+
+.rank-badge.grade-S {
+    background: #58a6ff;
+}
+
+.rank-badge.grade-S-plus {
+    background: #1f6feb;
+}
+
+.rank-badge.grade-S-plus-plus {
+    background: #8957e5;
+}
 
 .current-rank-row {
     background: #1f6feb33 !important;
@@ -516,17 +621,49 @@ header h1 {
 }
 
 /* Grade colors - Sistema oficial github-readme-stats (CDF) */
-.grade-C { stroke: #f85149 !important; }
-.grade-C-plus { stroke: #da3633 !important; }
-.grade-B-minus { stroke: #d29922 !important; }
-.grade-B { stroke: #db6d28 !important; }
-.grade-B-plus { stroke: #e3b341 !important; }
-.grade-A-minus { stroke: #3fb950 !important; }
-.grade-A { stroke: #2ea043 !important; }
-.grade-A-plus { stroke: #238636 !important; }
-.grade-S { stroke: #58a6ff !important; }
-.grade-S-plus { stroke: #1f6feb !important; }
-.grade-S-plus-plus { stroke: #8957e5 !important; }
+.grade-C {
+    stroke: #f85149 !important;
+}
+
+.grade-C-plus {
+    stroke: #da3633 !important;
+}
+
+.grade-B-minus {
+    stroke: #d29922 !important;
+}
+
+.grade-B {
+    stroke: #db6d28 !important;
+}
+
+.grade-B-plus {
+    stroke: #e3b341 !important;
+}
+
+.grade-A-minus {
+    stroke: #3fb950 !important;
+}
+
+.grade-A {
+    stroke: #2ea043 !important;
+}
+
+.grade-A-plus {
+    stroke: #238636 !important;
+}
+
+.grade-S {
+    stroke: #58a6ff !important;
+}
+
+.grade-S-plus {
+    stroke: #1f6feb !important;
+}
+
+.grade-S-plus-plus {
+    stroke: #8957e5 !important;
+}
 
 /* Responsive */
 @media (max-width: 768px) {

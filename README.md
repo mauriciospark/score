@@ -26,13 +26,14 @@ O problema que o SCORE resolve é a falta de transparência e padronização na 
 
 - **Análise de Perfil**: Busca automática de dados do usuário via API do GitHub
 - **Cálculo de Rank**: Algoritmo oficial baseado em percentis globais (S++, S, A+, A, A-, B+, B, B-, C+, C)
-- **Tabela Dinâmica de Metas**: 
+- **Tabela Dinâmica de Metas**:
   - Estado 1: Tabela informativa com todos os ranks e faixas de percentil
   - Estado 2: Tabela personalizada mostrando o rank atual e próximos objetivos
 - **Sistema de Estabilidade**: Margem de segurança e amortecimento para compensar falhas da API
 - **Diagnóstico Personalizado**: Recomendações baseadas no perfil do usuário
 - **Interface Responsiva**: Design moderno com tema dark mode
 - **Logo Profissional**: Identidade visual com marca Spark Mauricio
+- **Botão de Estrelas GitHub**: Exibe em tempo real o número de estrelas do repositório, com link direto para o projeto no GitHub
 
 ## Como Usar
 
@@ -88,6 +89,6 @@ cd score
 
 **PROPRIETÁRIO**: Mauricio Spark  
 **MARCA**: Spark Mauricio  
-**VERSÃO**: v1.0.0  
+**VERSÃO**: v1.0.1  
 **LINHAGEM**: SPARK  
 **COPYRIGHT**: © 2026 / Mauricio Spark. Todos os direitos reservados.
