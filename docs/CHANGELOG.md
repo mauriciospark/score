@@ -2,6 +2,16 @@
 
 Este documento mantém um registro cronológico e organizado de todas as evoluções e atualizações do sistema SCORE.
 
+## [1.0.2] - 2026-08-29
+
+### [Fixed]
+- **Reviews sempre zero**: `calculateOfficialRank` recebia `0` fixo no parâmetro `reviews` e a API nunca era consultada. Como reviews vale 1/15 do peso total, o melhor percentil possível era ~6,67% (A+) — os ranks S e S++ eram inalcançáveis para qualquer perfil. Agora as reviews são buscadas via `search/issues?q=reviewed-by:USER+type:pr` e passadas ao cálculo. (#9)
+
+### [Added]
+- **Total de Reviews** no card de estatísticas
+
+---
+
 ## [1.0.1] - 2026-07-21
 
 ### [Added]

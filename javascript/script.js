@@ -27,6 +27,7 @@ const totalStars = document.getElementById('totalStars');
 const totalCommits = document.getElementById('totalCommits');
 const totalPRs = document.getElementById('totalPRs');
 const totalIssues = document.getElementById('totalIssues');
+const totalReviews = document.getElementById('totalReviews');
 const contributedTo = document.getElementById('contributedTo');
 const gradeLetter = document.getElementById('gradeLetter');
 const gradeProgress = document.getElementById('gradeProgress');
@@ -223,6 +224,12 @@ async function fetchGitHubData(username, token) {
         const issuesData = await issuesResponse.json();
         const issues = issuesData.total_count || 0;
 
+        // 5b. Reviews de Pull Requests (peso 1 em calculateOfficialRank — sem esta busca
+        // o termo fica sempre em 0 e o melhor percentil possível é ~6,67% / A+; ver #9)
+        const reviewsResponse = await fetch(`https://api.github.com/search/issues?q=reviewed-by:${username}+type:pr&per_page=1`, { headers });
+        const reviewsData = await reviewsResponse.json();
+        const reviews = reviewsData.total_count || 0;
+
         // 6. Contribuições reais em outros projetos (Contando organizações e repositórios externos)
         // Buscar repositórios com escopo completo incluindo organizações
         const contributedResponse = await fetch(`https://api.github.com/user/repos?affiliation=owner,collaborator,organization_member&per_page=100`, { headers });
@@ -236,6 +243,7 @@ async function fetchGitHubData(username, token) {
             commits: totalCommits,
             prs: prs,
             issues: issues,
+            reviews: reviews,
             stars: totalStars,
             contributedTo: contributedTo,
             followers: userData.followers,
@@ -271,10 +279,11 @@ function updateUI(data) {
     totalCommits.textContent = data.commits;
     totalPRs.textContent = data.prs;
     totalIssues.textContent = data.issues;
+    totalReviews.textContent = data.reviews;
     contributedTo.textContent = data.contributedTo;
 
     // Calcula com a fórmula de estatística real do GitHub
-    const rankInfo = calculateOfficialRank(data.commits, data.prs, data.issues, 0, data.stars, data.followers);
+    const rankInfo = calculateOfficialRank(data.commits, data.prs, data.issues, data.reviews, data.stars, data.followers);
 
     gradeLetter.textContent = rankInfo.level;
 
