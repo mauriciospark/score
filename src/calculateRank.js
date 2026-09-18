@@ -3,96 +3,105 @@
   PROPRIETÁRIO: Mauricio Spark
   MARCA:        Spark Mauricio
   PROJETO:      Score
-  VERSÃO:       v1.0.0
+  VERSÃO:       v1.0.2
   LINHAGEM:     SPARK
   ============================================================================
   Documento de Planejamento de Escopo
   COPYRIGHT: © 2026 / Mauricio Spark. Todos os direitos reservados.
   ============================================================================
 */
-/**
- * Calculates the exponential cdf.
- *
- * @param {number} x The value.
- * @returns {number} The exponential cdf.
- */
-function exponential_cdf(x) {
-  return 1 - 2 ** -x;
-}
+
+const RANK_POINTS = {
+  Commits: 1,
+  ContributedToNotOwnerRepositories: 10,
+  ContributedToOwnRepositories: 1,
+  CreatedRepositories: 1,
+  DirectStars: 3.5,
+  Followers: 1,
+  IndirectStars: 1,
+  Issues: 1,
+  PullRequests: 1,
+  PullRequestsToAnotherRepositories: 5,
+  CommitsToMyRepositories: 1,
+  CommitsToAnotherRepositories: 10,
+  ContributedTo: 1,
+};
+
+const RANK_DEGREE = [
+  { Rank: "S++", Points: 300000 },
+  { Rank: "S+", Points: 150000 },
+  { Rank: "S", Points: 100000 },
+  { Rank: "A+", Points: 50000 },
+  { Rank: "A", Points: 20000 },
+  { Rank: "A-", Points: 10000 },
+  { Rank: "B+", Points: 5000 },
+  { Rank: "B", Points: 2000 },
+  { Rank: "B-", Points: 1000 },
+  { Rank: "C+", Points: 500 },
+  { Rank: "C", Points: 0 },
+];
 
 /**
- * Calculates the log normal cdf.
- *
- * @param {number} x The value.
- * @returns {number} The log normal cdf.
- */
-function log_normal_cdf(x) {
-  // approximation
-  return x / (1 + x);
-}
-
-/**
- * Calculates the users rank.
+ * Calculates the users rank based on points system.
  *
  * @param {object} params Parameters on which the user's rank depends.
- * @param {boolean} params.all_commits Whether `include_all_commits` was used.
  * @param {number} params.commits Number of commits.
- * @param {number} params.prs The number of pull requests.
- * @param {number} params.issues The number of issues.
- * @param {number} params.reviews The number of reviews.
- * @param {number} params.repos Total number of repos.
- * @param {number} params.stars The number of stars.
- * @param {number} params.followers The number of followers.
- * @returns {{ level: string, percentile: number }} The users rank.
+ * @param {number} params.contributedToNotOwnerRepositories Number of repos contributed to not owned.
+ * @param {number} params.contributedToOwnRepositories Number of repos contributed to owned.
+ * @param {number} params.createdRepositories Number of created repositories.
+ * @param {number} params.directStars Number of direct stars.
+ * @param {number} params.followers Number of followers.
+ * @param {number} params.indirectStars Number of indirect stars.
+ * @param {number} params.issues Number of issues.
+ * @param {number} params.pullRequests Number of pull requests.
+ * @param {number} params.pullRequestsToAnotherRepositories Number of PRs to other repos.
+ * @param {number} params.commitsToMyRepositories Number of commits to own repos.
+ * @param {number} params.commitsToAnotherRepositories Number of commits to other repos.
+ * @param {number} params.contributedTo Number of contributions.
+ * @returns {{ level: string, points: number }} The users rank.
  */
 function calculateRank({
-  all_commits,
-  commits,
-  prs,
-  issues,
-  reviews,
-  // eslint-disable-next-line no-unused-vars
-  repos, // unused
-  stars,
-  followers,
+  commits = 0,
+  contributedToNotOwnerRepositories = 0,
+  contributedToOwnRepositories = 0,
+  createdRepositories = 0,
+  directStars = 0,
+  followers = 0,
+  indirectStars = 0,
+  issues = 0,
+  pullRequests = 0,
+  pullRequestsToAnotherRepositories = 0,
+  commitsToMyRepositories = 0,
+  commitsToAnotherRepositories = 0,
+  contributedTo = 0,
 }) {
-  const COMMITS_MEDIAN = all_commits ? 1000 : 250,
-    COMMITS_WEIGHT = 2;
-  const PRS_MEDIAN = 50,
-    PRS_WEIGHT = 3;
-  const ISSUES_MEDIAN = 25,
-    ISSUES_WEIGHT = 1;
-  const REVIEWS_MEDIAN = 2,
-    REVIEWS_WEIGHT = 1;
-  const STARS_MEDIAN = 50,
-    STARS_WEIGHT = 4;
-  const FOLLOWERS_MEDIAN = 10,
-    FOLLOWERS_WEIGHT = 1;
+  const totalPoints =
+    commits * RANK_POINTS.Commits +
+    contributedToNotOwnerRepositories *
+      RANK_POINTS.ContributedToNotOwnerRepositories +
+    contributedToOwnRepositories * RANK_POINTS.ContributedToOwnRepositories +
+    createdRepositories * RANK_POINTS.CreatedRepositories +
+    directStars * RANK_POINTS.DirectStars +
+    followers * RANK_POINTS.Followers +
+    indirectStars * RANK_POINTS.IndirectStars +
+    issues * RANK_POINTS.Issues +
+    pullRequests * RANK_POINTS.PullRequests +
+    pullRequestsToAnotherRepositories *
+      RANK_POINTS.PullRequestsToAnotherRepositories +
+    commitsToMyRepositories * RANK_POINTS.CommitsToMyRepositories +
+    commitsToAnotherRepositories * RANK_POINTS.CommitsToAnotherRepositories +
+    contributedTo * RANK_POINTS.ContributedTo;
 
-  const TOTAL_WEIGHT =
-    COMMITS_WEIGHT +
-    PRS_WEIGHT +
-    ISSUES_WEIGHT +
-    REVIEWS_WEIGHT +
-    STARS_WEIGHT +
-    FOLLOWERS_WEIGHT;
+  // Find the highest rank that the user qualifies for
+  let level = "C";
+  for (const rank of RANK_DEGREE) {
+    if (totalPoints >= rank.Points) {
+      level = rank.Rank;
+      break;
+    }
+  }
 
-  const THRESHOLDS = [0.5, 5, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100];
-  const LEVELS = ["S++", "S", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"];
-
-  const rank =
-    1 -
-    (COMMITS_WEIGHT * exponential_cdf(commits / COMMITS_MEDIAN) +
-      PRS_WEIGHT * exponential_cdf(prs / PRS_MEDIAN) +
-      ISSUES_WEIGHT * exponential_cdf(issues / ISSUES_MEDIAN) +
-      REVIEWS_WEIGHT * exponential_cdf(reviews / REVIEWS_MEDIAN) +
-      STARS_WEIGHT * log_normal_cdf(stars / STARS_MEDIAN) +
-      FOLLOWERS_WEIGHT * log_normal_cdf(followers / FOLLOWERS_MEDIAN)) /
-      TOTAL_WEIGHT;
-
-  const level = LEVELS[THRESHOLDS.findIndex((t) => rank * 100 <= t)];
-
-  return { level, percentile: rank * 100 };
+  return { level, points: totalPoints };
 }
 
 export { calculateRank };

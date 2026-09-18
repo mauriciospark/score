@@ -2,6 +2,7 @@
 
 Este documento mantém um registro cronológico e organizado de todas as evoluções e atualizações do sistema SCORE.
 
+<<<<<<< HEAD
 ## [1.0.2] - 2026-08-29
 
 ### [Fixed]
@@ -9,12 +10,34 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 
 ### [Added]
 - **Total de Reviews** no card de estatísticas
+=======
+## [1.0.2] - 2026-09-18
+
+### [Added]
+
+- **Sistema de Pontos Ponderados**: Nova abordagem de cálculo de rank baseada em pontos por tipo de contribuição
+- **Novos Níveis de Rank**: Adição do nível S+ entre S e S++
+- **Escala Tradicional**: Ranks na ordem C, C+, B-, B, B+, A-, A, A+, S, S+, S++
+- **Sistema de Pontos Detalhado**: Pontuação específica para cada tipo de atividade (commits, PRs, stars, contribuições externas, etc.)
+
+### [Changed]
+
+- **Mudança de Algoritmo**: Substituição do sistema CDF (Cumulative Distribution Function) por sistema de pontos ponderados
+- **Atualização de Métricas**: Novo sistema de cálculo mais transparente e linear
+- **Documentação Atualizada**: README, ARCHITECTURE e CHANGELOG refletindo o novo sistema
+
+### [Removed]
+
+- **Funções CDF**: Remoção de funções exponential_cdf e log_normal_cdf
+- **Sistema de Medianas**: Substituição por sistema de pontos fixos
+>>>>>>> 550b6fc (Atualiza arquivos do projeto - ref #13)
 
 ---
 
 ## [1.0.1] - 2026-07-21
 
 ### [Added]
+
 - **Botão de Estrelas GitHub**: Exibe em tempo real o número de estrelas do repositório
 - **Link Direto para Repositório**: Botão abre o projeto no GitHub em nova aba
 - **Indicador de Carregamento**: Exibe "..." durante a busca de estrelas
@@ -23,6 +46,7 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 - **Layout Inline**: Integração do botão no layout principal da interface
 
 ### [Changed]
+
 - **Ajuste de CSS**: Remoção de header fixo para melhor integração visual
 - **Melhoria de UX**: Transições mais suaves e feedback visual melhorado
 
@@ -31,25 +55,26 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 ## [1.0.0] - 2026-06-22
 
 ### [Added]
+
 - **Sistema de Auditoria de Perfil GitHub**: Lançamento inicial da plataforma
 - **Cálculo de Rank por Percentil**: Implementação do algoritmo oficial de CDF (Cumulative Distribution Function) do GitHub
 - **Tabela Dinâmica de Metas**:
   - Estado 1: Tabela informativa com todos os ranks (S++, S, A+, A, A-, B+, B, B-, C+, C)
   - Estado 2: Tabela personalizada com dados do usuário e próximos objetivos
-- **Integração com API do GitHub**: 
+- **Integração com API do GitHub**:
   - Busca de perfil básico
   - Coleta de commits via Search API
   - Coleta de Pull Requests e Issues
   - Cálculo de estrelas com paginação completa
   - Busca de contribuições em organizações
-- **Sistema de Pesos Dinâmicos**: 
+- **Sistema de Pesos Dinâmicos**:
   - Commits: peso 1 (reduzido por instabilidade da API)
   - PRs: peso 5 (aumentado por confiabilidade)
   - Estrelas: peso 6 (máximo por estabilidade)
   - Issues, Reviews, Followers: peso 1
 - **Margem de Segurança**: Amortecimento de 15% para compensar falhas da API
 - **Estabilidade da Nota**: Buffer de 5% para evitar variações pequenas
-- **Interface Profissional**: 
+- **Interface Profissional**:
   - Design dark mode com gradientes
   - Logo Spark Mauricio no cabeçalho
   - Layout responsivo para todos os dispositivos
@@ -57,18 +82,21 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 - **Círculo de Progresso**: Visualização gráfica do rank alcançado
 
 ### [Changed]
+
 - **Refatoração de Algoritmos**: Implementação de funções CDF exponencial e log-normal
 - **Otimização de Requisições**: Paginação completa para busca de repositórios
 - **Ajuste de Headers**: Uso de `application/vnd.github.cloak-preview+json` para commits
 - **Melhoria na Busca de Contribuições**: Inclusão de parâmetro `affiliation=owner,collaborator,organization_member`
 
 ### [Fixed]
+
 - **Correção de Contagem de Contribuições**: Inclui repositórios de organizações onde usuário é membro
 - **Fix na Busca de Commits**: Header correto para Search API de commits
 - **Correção de Fallback**: Estimativa baseada em repositórios públicos quando API falha
 - **Ajuste na Contagem de PRs**: Filtro correto para evitar contagem de issues
 
 ### [Technical]
+
 - **Arquitetura Client-Side First**: Sistema 100% client-side sem backend próprio
 - **Privacidade de Dados**: Nenhuma persistência de informações sensíveis
 - **Performance**: Cache inteligente e requisições otimizadas
@@ -79,6 +107,7 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 ## Próximas Versões (Planejado)
 
 ### [1.1.0] - Planejado
+
 - [Added] Sistema de histórico de avaliações
 - [Added] Exportação de relatórios em PDF
 - [Added] Modo comparativo entre perfis
@@ -86,6 +115,7 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 - [Fixed] Otimizações de performance
 
 ### [2.0.0] - Planejado
+
 - [Added] Aplicação mobile (React Native)
 - [Added] Dashboard administrativo para organizações
 - [Added] API pública para integrações de terceiros
@@ -93,6 +123,7 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 - [Changed] Refatoração completa para suporte multi-plataforma
 
 ### [3.0.0] - Planejado
+
 - [Added] Inteligência artificial para recomendações avançadas
 - [Added] Análise de tendências de carreira
 - [Added] Integração com GitLab e Bitbucket
@@ -102,6 +133,7 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 ---
 
 **Convenções de Changelog**:
+
 - **[Added]**: Novos recursos e funcionalidades
 - **[Changed]**: Modificações em funcionalidades existentes
 - **[Fixed]**: Correções de bugs
@@ -113,6 +145,6 @@ Este documento mantém um registro cronológico e organizado de todas as evoluç
 
 **PROPRIETÁRIO**: Mauricio Spark  
 **MARCA**: Spark Mauricio  
-**VERSÃO**: v1.0.1  
+**VERSÃO**: v1.0.2  
 **LINHAGEM**: SPARK  
 **COPYRIGHT**: © 2026 / Mauricio Spark. Todos os direitos reservados.
