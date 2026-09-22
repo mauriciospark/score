@@ -97,7 +97,7 @@ cd score
 ---
 
 **PROPRIETÁRIO**: Mauricio Spark  
-**MARCA**: Spark Mauricio  
+**MARCA**: SparkMauricio  
 **VERSÃO**: v1.0.2  
 **LINHAGEM**: SPARK  
 **COPYRIGHT**: © 2026 / Mauricio Spark. Todos os direitos reservados.
