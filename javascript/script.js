@@ -40,7 +40,8 @@ const goalsContainer = document.getElementById('goalsContainer');
 // Escala oficial de Ranks baseada nos Percentis do GitHub Mundial
 const ranksScale = [
     { name: 'S++', minPercentile: 0, maxPercentile: 0.5, class: 'grade-S-plus-plus', description: 'Elite Máxima - Top 0.5%' },
-    { name: 'S', minPercentile: 0.5, maxPercentile: 5, class: 'grade-S', description: 'Elite - Top 5%' },
+    { name: 'S+', minPercentile: 0.5, maxPercentile: 2, class: 'grade-S-plus', description: 'Elite Avançada - Top 2%' },
+    { name: 'S', minPercentile: 2, maxPercentile: 5, class: 'grade-S', description: 'Elite - Top 5%' },
     { name: 'A+', minPercentile: 5, maxPercentile: 12.5, class: 'grade-A-plus', description: 'Avançado - Top 12.5%' },
     { name: 'A', minPercentile: 12.5, maxPercentile: 25, class: 'grade-A', description: 'Avançado - Top 25%' },
     { name: 'A-', minPercentile: 25, maxPercentile: 37.5, class: 'grade-A-minus', description: 'Avançado - Top 37.5%' },
